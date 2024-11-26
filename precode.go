@@ -22,8 +22,8 @@ func Generator(ctx context.Context, ch chan<- int64, fn func(int64)) {
 		case <-ctx.Done():
 			return
 		default:
-			fn(n)
 			ch <- n
+			fn(n)
 			n++
 		}
 	}
@@ -36,9 +36,9 @@ func Worker(in <-chan int64, out chan<- int64) {
 
 	for v := range in {
 		out <- v
+		time.Sleep(1 * time.Millisecond)
 	}
 
-	time.Sleep(1 * time.Millisecond)
 }
 
 func main() {
